@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Campaigns</h2>
+        <a href="{{ url_for('campaigns.new_campaign') }}" class="btn btn-primary">New Campaign</a>
+    </div>
+    
+    {% if campaigns %}
+    <div class="row">
+        {% for campaign in campaigns %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ campaign.name }}</h5>
+                    <p class="card-text">
+                        <strong>Type:</strong> {{ campaign.campaign_type }}<br>
+                        <strong>Lead Type:</strong> {{ campaign.lead_type }}<br>
+                        <strong>Status:</strong> {{ campaign.status }}
+                    </p>
+                    
+                    <div class="d-flex gap-2">
+                        <a href="{{ url_for('campaigns.upload_leads', campaign_id=campaign.id) }}" class="btn btn-outline-primary">
+                            Upload Leads
+                        </a>
+                        {% if campaign.status == 'draft' %}
+                        <form method="POST" action="{{ url_for('campaigns.start_campaign', campaign_id=campaign.id) }}" class="d-inline">
+                            <button type="submit" class="btn btn-success">Start Campaign</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        No campaigns found. Create your first campaign to get started!
+    </div>
+    {% endif %}
+</div>
+{% endblock %} 

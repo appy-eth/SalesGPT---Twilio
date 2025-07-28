@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">Call Results</h2>
+    
+    {% if campaigns %}
+    <div class="row">
+        {% for campaign in campaigns %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ campaign.name }}</h5>
+                    
+                    <div class="row text-center mb-4">
+                        <div class="col">
+                            <h6>Total Leads</h6>
+                            <h3>{{ campaign.stats.total_leads }}</h3>
+                        </div>
+                        <div class="col">
+                            <h6>Contacted</h6>
+                            <h3>{{ campaign.stats.contacted }}</h3>
+                        </div>
+                        <div class="col">
+                            <h6>Meetings</h6>
+                            <h3>{{ campaign.stats.meetings }}</h3>
+                        </div>
+                        <div class="col">
+                            <h6>Emails</h6>
+                            <h3>{{ campaign.stats.emails }}</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Prospect</th>
+                                    <th>Company</th>
+                                    <th>Status</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for lead in campaign.leads %}
+                                <tr>
+                                    <td>{{ lead.prospect_name }}</td>
+                                    <td>{{ lead.company_name }}</td>
+                                    <td>
+                                        <span class="badge bg-{{ lead.status|status_color }}">
+                                            {{ lead.status }}
+                                        </span>
+                                    </td>
+                                    <td>{{ lead.notes }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        No campaigns found. Create a campaign to see results!
+    </div>
+    {% endif %}
+</div>
+{% endblock %} 

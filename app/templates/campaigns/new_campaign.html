@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">New Campaign</h2>
+                    
+                    <form method="POST" action="{{ url_for('campaigns.new_campaign') }}">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Campaign Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="campaign_type" class="form-label">Campaign Type</label>
+                            <select class="form-select" id="campaign_type" name="campaign_type" required>
+                                <option value="outbound">Outbound</option>
+                                <option value="inbound">Inbound</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="lead_type" class="form-label">Lead Type</label>
+                            <select class="form-select" id="lead_type" name="lead_type" required>
+                                <option value="company">Company</option>
+                                <option value="individual">Individual</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="introduction" class="form-label">Introduction Script</label>
+                            <textarea class="form-control" id="introduction" name="introduction" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="qualification" class="form-label">Qualification Script</label>
+                            <textarea class="form-control" id="qualification" name="qualification" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="value_proposition" class="form-label">Value Proposition Script</label>
+                            <textarea class="form-control" id="value_proposition" name="value_proposition" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="needs_analysis" class="form-label">Needs Analysis Script</label>
+                            <textarea class="form-control" id="needs_analysis" name="needs_analysis" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="solution_presentation" class="form-label">Solution Presentation Script</label>
+                            <textarea class="form-control" id="solution_presentation" name="solution_presentation" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="objection_handling" class="form-label">Objection Handling Script</label>
+                            <textarea class="form-control" id="objection_handling" name="objection_handling" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="closing" class="form-label">Closing Script</label>
+                            <textarea class="form-control" id="closing" name="closing" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Create Campaign</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

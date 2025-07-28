@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center py-5">
+    <img src="{{ url_for('static', filename='images/sellcrowd-logo.png') }}" alt="Sellcrowd" class="mb-4" style="max-width: 200px;">
+    
+    <h1 class="display-4 mb-4">Call 1,000 Leads Instantly With Sellcrowd</h1>
+    
+    <div class="d-flex justify-content-center gap-3">
+        <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#waitlistModal">
+            Join Waitlist
+        </button>
+        <a href="{{ url_for('auth.login') }}" class="btn btn-outline-primary btn-lg">
+            Login
+        </a>
+    </div>
+</div>
+
+<!-- Waitlist Modal -->
+<div class="modal fade" id="waitlistModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Join the Waitlist</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="waitlistForm">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="submitWaitlist">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('submitWaitlist').addEventListener('click', async function() {
+    const form = document.getElementById('waitlistForm');
+    const formData = new FormData(form);
+    
+    try {
+        const response = await fetch('/join-waitlist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: formData.get('name'),
+                email: formData.get('email')
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            alert('Successfully joined the waitlist!');
+            bootstrap.Modal.getInstance(document.getElementById('waitlistModal')).hide();
+        } else {
+            alert(data.error || 'An error occurred');
+        }
+    } catch (error) {
+        alert('An error occurred');
+    }
+});
+</script>
+{% endblock %} 
